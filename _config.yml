@@ -48,13 +48,10 @@ exclude:
   - vendor/cache/
   - vendor/gems/
   - vendor/ruby/
-  - .git/*
+  - .git
   - .jekyll-cache/
   - .sass-cache/
-  - _notes/*
-  - styles.scss
   - _config.yml
   - _pages/*
   - _includes/notes_graph.json
-  - "**/*.md"
   - netlify.toml
