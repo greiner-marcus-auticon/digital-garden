@@ -20,11 +20,23 @@ jobs:
           ruby-version: '3.2.2'
           bundler-cache: false
 
+      - name: Install specific Bundler version
+        run: gem install bundler -v 2.2.18
+
       - name: Install Dependencies
         run: |
-          bundle install
+          bundle install --config _config.yml
           echo "Listing content of Gemfile.lock:"
           cat Gemfile.lock
+
+      - name: Print Jekyll configuration, environment variables, and gem versions
+        run: |
+          echo "Printing Jekyll configuration:"
+          bundle exec jekyll doctor --config _config.yml
+          echo "Printing environment variables:"
+          printenv
+          echo "Printing gem versions:"
+          bundle exec gem list
 
       - name: Build with Jekyll
         run: |
