@@ -12,6 +12,4 @@ I'm using [Jekyll](https://jekyllrb.com/) to build this garden, and I'm inspired
 
 If you're curious about the tools I'm using, you can find the source code for this garden on [GitHub](https://github.com/greiner-marcus-auticon/digital-garden).
 
-Thanks to [Maxime Vaillancourt](https://github.com/maximevaillancourt).
-
-If you have any questions, feedback, or just want to chat, feel free to [reach out](/contact). I'd love to hear from you! 🌿
+Thanks to [Maxime Vaillancourt](https://github.com/maximevaillancourt) 🌿
