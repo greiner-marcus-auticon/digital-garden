@@ -56,3 +56,5 @@ exclude:
   - _config.yml
   - _pages/*
   - _includes/notes_graph.json
+  - "**/*.md"
+  - netlify.toml
