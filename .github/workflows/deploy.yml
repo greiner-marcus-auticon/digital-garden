@@ -9,49 +9,40 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout main branch
         uses: actions/checkout@v3
+        with:
+          ref: main
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.2.2'
-          bundler-cache: true
+          bundler-cache: false
 
       - name: Install Dependencies
         run: bundle install
 
       - name: Build with Jekyll
-        run: bundle exec jekyll build
+        run: |
+          bundle exec jekyll build
+          sleep 3 # sleep to finish before rsync
 
-      - name: Deploy to GitHub Pages
+      - name: Checkout gh-pages branch
+        run: |
+          git fetch origin
+          git checkout gh-pages || git checkout -b gh-pages
+
+      - name: Copy built site to gh-pages
+        run: |
+          rsync -av --delete _site/ .
+
+      - name: Commit and push changes
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Set the user name and email for Git
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
-
-          # Set the remote URL for the repository, including the authentication token
-          git remote set-url origin "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git"
-
-          # Fetch all branches of the remote repository
-          git fetch origin
-
-          # Add a new worktree for the gh-pages branch in a temporary directory
-          git worktree add /tmp/gh-pages gh-pages
-
-          # Copy the built site to the new worktree
-          cp -r _site/* /tmp/gh-pages/
-
-          # Change the current directory to the new worktree
-          cd /tmp/gh-pages
-
-          # Stage all changes for commit
           git add --all
-
-          # Commit the changes with a message
           git commit -m "Deploy site"
-
-          # Force push the changes to the gh-pages branch of the remote repository
           git push origin gh-pages --force
