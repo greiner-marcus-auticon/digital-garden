@@ -1,5 +1,6 @@
 # Generated website directory
 _site/
+vendor/
 
 # Sass cache
 .sass-cache/
