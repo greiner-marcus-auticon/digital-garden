@@ -43,15 +43,10 @@ defaults:
       layout: "note"
 
 exclude:
-  - node_modules
-  - vendor/bundle/
-  - vendor/cache/
-  - vendor/gems/
-  - vendor/ruby/
-  - .git
   - .jekyll-cache/
   - .sass-cache/
   - _config.yml
-  - _pages/*
   - _includes/notes_graph.json
   - netlify.toml
+  - LICENSE.md
+  - README.md
