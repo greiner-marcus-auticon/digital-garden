@@ -25,44 +25,14 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          bundle install --config _config.yml
-          echo "Listing content of Gemfile.lock:"
-          cat Gemfile.lock
-
-      - name: Print Jekyll configuration, environment variables, and gem versions
-        run: |
-          echo "Printing Jekyll configuration:"
-          bundle exec jekyll doctor --config _config.yml
-          echo "Printing environment variables:"
-          printenv
-          echo "Printing gem versions:"
-          bundle exec gem list
+          bundle install --jobs 4 --retry 3
 
       - name: Build with Jekyll
         run: |
-          bundle exec jekyll build
-          sleep 3 # sleep to finish before rsync
+          bundle exec jekyll build --config _config.yml
 
-      - name: List generated files
-        run: |
-          echo "Listing all generated files:"
-          ls -R _site/
-
-      - name: Checkout gh-pages branch
-        run: |
-          git fetch origin
-          git checkout gh-pages || git checkout -b gh-pages
-
-      - name: Copy built site to gh-pages
-        run: |
-          rsync -av --delete _site/ .
-
-      - name: Commit and push changes
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          git config --global user.name 'github-actions'
-          git config --global user.email 'github-actions@github.com'
-          git add --all
-          git commit -m "Deploy site"
-          git push origin gh-pages --force
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
