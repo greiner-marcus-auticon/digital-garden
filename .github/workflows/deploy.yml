@@ -21,12 +21,20 @@ jobs:
           bundler-cache: false
 
       - name: Install Dependencies
-        run: bundle install
+        run: |
+          bundle install
+          echo "Listing content of Gemfile.lock:"
+          cat Gemfile.lock
 
       - name: Build with Jekyll
         run: |
           bundle exec jekyll build
           sleep 3 # sleep to finish before rsync
+
+      - name: List generated files
+        run: |
+          echo "Listing all generated files:"
+          ls -R _site/
 
       - name: Checkout gh-pages branch
         run: |
