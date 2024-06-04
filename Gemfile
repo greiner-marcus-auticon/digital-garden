@@ -9,5 +9,3 @@ gem "jekyll-last-modified-at", git: "https://github.com/maximevaillancourt/jekyl
 gem "webrick", "~> 1.8"
 gem "nokogiri"
 gem 'ffi', '>= 1.17.0'
-# Avoid polling for changes on Windows
-gem 'wdm', '>= 0.1.0' if Gem.win_platform?
